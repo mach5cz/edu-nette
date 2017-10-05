@@ -20,6 +20,14 @@
 
 <body>
 	<div class=container>
+		<div class="text-center">
+			<ul class="nav nav-pills">
+				<li><a n:href="Homepage:default">Homepage</a></li>
+				<li><a n:href="Page:project">O Projektu</a></li>
+				<li><a n:href="Page:contact">Kontakt</a></li>
+			</ul>
+		</div>
+		<hr>
 		<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
 
 		{include content}
