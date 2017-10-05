@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Presenters;
 
 
-class PagePresenter extends BasePresenter
+class ProjectPresenter extends BasePresenter
 {
 	public function renderDefault()
 	{
