@@ -22,9 +22,9 @@
 	<div class=container>
 		<div class="text-center">
 			<ul class="nav nav-pills">
-				<li{ifCurrent Homepage:default} class="active"{/ifCurrent}><a n:href="Homepage:default">Homepage</a></li>
-				<li{ifCurrent Page:project} class="active"{/ifCurrent}><a n:href="Page:project">O Projektu</a></li>
-				<li{ifCurrent Page:contact} class="active"{/ifCurrent}><a n:href="Page:contact">Kontakt</a></li>
+				<li n:class="$presenter->isLinkCurrent('Homepage:default') ? 'active'"><a n:href="Homepage:default">Homepage</a></li>
+				<li n:class="$presenter->isLinkCurrent('Page:project') ? 'active'"><a n:href="Page:project">O Projektu</a></li>
+				<li n:class="$presenter->isLinkCurrent('Page:contact') ? 'active'"><a n:href="Page:contact">Kontakt</a></li>
 			</ul>
 		</div>
 		<hr>
