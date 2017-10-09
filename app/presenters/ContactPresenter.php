@@ -3,18 +3,28 @@ declare(strict_types=1);
 
 namespace App\Presenters;
 
-use
-    Nette\Application\UI,
-    Nette\Mail\Message,
-    Nette\Mail\SendmailMailer
-;
+use Nette\Application\UI;
+use Nette\Mail\IMailer;
+use Nette\Mail\Message;
 
 
 class ContactPresenter extends BasePresenter
 {
+    /**
+     * @var IMailer
+     */
+    private $mailer;
+
+    /**
+     * ContactPresenter constructor.
+     */
+    public function __construct(IMailer $mailer)
+    {
+        $this->mailer = $mailer;
+    }
 
 
-    /*
+    /**
      * Creates Contact form
      * return UI\Form
      */
@@ -39,7 +49,7 @@ class ContactPresenter extends BasePresenter
      */
     public function contactFormSucceeded(UI\Form $form, $values)
     {
-        $mail = ['customer'=>NULL, 'admin'=>NULL];
+        $mail = ['customer' => NULL, 'admin' => NULL];
 
         // customer message
         $mail['customer'] = new Message;
@@ -53,15 +63,14 @@ class ContactPresenter extends BasePresenter
         $mail['admin']->setFrom($this->context->parameters['mailFrom'])
             ->addTo($this->context->parameters['mailAdmin'])
             ->setSubject('Potvrzení')
-            ->setBody(  "Dobrý den,\nna webu ".$this->context->parameters['projectTitle']." byla vyplněna následující zpráva".
-                        "\n\nE-mail: ".$values->email.
-                        "\nZpráva: ".$values->message
+            ->setBody("Dobrý den,\nna webu " . $this->context->parameters['projectTitle'] . " byla vyplněna následující zpráva" .
+                "\n\nE-mail: " . $values->email .
+                "\nZpráva: " . $values->message
             );
 
         // send mail
-        $mailer = new SendmailMailer;
         foreach ($mail as $m) {
-            $mailer->send($m);
+            $this->mailer->send($m);
         }
 
         $this->flashMessage('Formulář byl úspěšně odeslán, děkujeme.');

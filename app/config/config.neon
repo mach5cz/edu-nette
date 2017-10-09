@@ -2,6 +2,10 @@
 # WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
 # https://nette.org/security-warning
 #
+parameters:
+    projectTitle: Machy's Sandbox
+    mailFrom: Mach5 <info@mach5.cz>
+    mailAdmin: machacek@flexdesign.cz
 
 
 application:
@@ -25,9 +29,3 @@ database:
 services:
 	- App\Forms\FormFactory
 	router: App\Router\RouterFactory::createRouter
-
-
-parameters:
-    projectTitle: Machy's Sandbox
-    mailFrom: Mach5 <info@mach5.cz>
-    mailAdmin: machacek@flexdesign.cz
