@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Presenters;
 
+use App\Misc\ConfigParameters;
 use Nette\Application\UI;
 use Nette\Mail\IMailer;
 use Nette\Mail\Message;
@@ -16,11 +17,18 @@ class ContactPresenter extends BasePresenter
     private $mailer;
 
     /**
+     * @var ConfigParameters
+     */
+    private $configParameters;
+
+
+    /**
      * ContactPresenter constructor.
      */
-    public function __construct(IMailer $mailer)
+    public function __construct(IMailer $mailer, ConfigParameters $configParameters)
     {
         $this->mailer = $mailer;
+        $this->configParameters = $configParameters;
     }
 
 
@@ -53,17 +61,17 @@ class ContactPresenter extends BasePresenter
 
         // customer message
         $mail['customer'] = new Message;
-        $mail['customer']->setFrom($this->context->parameters['mailFrom'])
+        $mail['customer']->setFrom($this->configParameters->getMailFrom())
             ->addTo($values->email)
             ->setSubject('Potvrzení')
             ->setBody("Dobrý den,\nděkujeme za Vaši zprávu.");
 
         // admin message
         $mail['admin'] = new Message;
-        $mail['admin']->setFrom($this->context->parameters['mailFrom'])
-            ->addTo($this->context->parameters['mailAdmin'])
+        $mail['admin']->setFrom($this->configParameters->getMailFrom())
+            ->addTo($this->configParameters->getMailAdmin())
             ->setSubject('Potvrzení')
-            ->setBody("Dobrý den,\nna webu " . $this->context->parameters['projectTitle'] . " byla vyplněna následující zpráva" .
+            ->setBody("Dobrý den,\nna webu " . $this->configParameters->getProjectTitle() . " byla vyplněna následující zpráva" .
                 "\n\nE-mail: " . $values->email .
                 "\nZpráva: " . $values->message
             );

@@ -28,4 +28,5 @@ database:
 
 services:
 	- App\Forms\FormFactory
+	- App\Misc\ConfigParameters(%projectTitle%, %mailFrom%, %mailAdmin%)
 	router: App\Router\RouterFactory::createRouter
