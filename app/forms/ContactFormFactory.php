@@ -64,6 +64,13 @@ class ContactFormFactory extends BaseFormFactory
      */
     public function processForm(UI\Form $form)
     {
+        // save to db
+        $this->database->table('contact_form')->insert([
+            'email'=>$form->values->email,
+            'message'=>$form->values->message,
+            'created_at'=>new \Nette\Utils\DateTime()
+        ]);
+
 
         $mail = ['customer' => NULL, 'admin' => NULL];
 
