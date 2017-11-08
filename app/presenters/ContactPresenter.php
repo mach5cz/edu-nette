@@ -5,6 +5,7 @@ namespace App\Presenters;
 
 use App\Misc\ConfigParameters;
 use Nette\Application\UI;
+use Nette\Database\Context;
 use Nette\Mail\IMailer;
 use Nette\Mail\Message;
 
@@ -21,14 +22,29 @@ class ContactPresenter extends BasePresenter
      */
     private $configParameters;
 
+    /**
+     * @var Context
+     */
+    private $database;
+
 
     /**
      * ContactPresenter constructor.
+     * @param IMailer $mailer
+     * @param ConfigParameters $configParameters
+     * @param Context $database
      */
-    public function __construct(IMailer $mailer, ConfigParameters $configParameters)
+    public function __construct(IMailer $mailer, ConfigParameters $configParameters, Context $database)
     {
         $this->mailer = $mailer;
         $this->configParameters = $configParameters;
+        $this->database = $database;
+    }
+
+
+    public function renderDefault()
+    {
+        $this->database->table('contact_form')->wherePrimary(1)->fetch();
     }
 
 
@@ -51,9 +67,11 @@ class ContactPresenter extends BasePresenter
     }
 
 
-    /*
+    /**
      * Proceeds Contact form
-     * return void
+     * @param UI\Form $form
+     * @param $values
+     * @throws \Nette\Application\AbortException
      */
     public function contactFormSucceeded(UI\Form $form, $values)
     {
