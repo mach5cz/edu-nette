@@ -23,9 +23,6 @@ class ContactFormFactory extends BaseFormFactory
     private $database;
 
 
-    public $onFormSent;
-
-
     /**
      * ContactFormFactory constructor.
      * @param IMailer $mailer
